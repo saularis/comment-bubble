@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comment Bubble By Abdulla Malik</title>
+    <link rel="stylesheet" href="./assets/css/comment-bubble.css" />
+    <script
+      src="https://kit.fontawesome.com/b9fe52f505.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <section class="heading">
+        <h1><span class="logo"> Comment Bubble</span></h1>
+        <h3>Image commenting system made using Vuejs by <a href="https://abdulla.dev/">Abdulla Malik</a></h3>
+      </section>
+
+      <section class="instructions">
+        <h2>Instructions</h2>
+        <p>
+          Please click on the image to create a comment bubble, next to it there'll be a textarea where you can write your comment. Once you finish writing your comment you can click on save button to save and delete(trash) icons to remove comment from the image.
+        </p>
+      </section>
+
+      <section class="commented">
+        <div>
+          <img
+            src="https://source.unsplash.com/random"
+            id="image"
+            alt="unsplash random image"
+            @click.stop="addComment($event)"
+            @mouseover="getCoord"
+          >
+          <span
+            v-if="comments.length"
+            v-for="(comment, i) in comments"
+            class="comment-bubble"
+            @click.stop="showTextArea(i)"
+            :key="i+1"
+            :style="{
+              top: comment.y + 'px',
+              left: comment.x + 'px',
+            }"
+          >
+            {{ i+1 }}
+            <div class="comment" v-if="comment.showTextArea">
+              <div>
+                <textarea placeholder="Enter your comment here..." rows="3" v-model="comment.text"></textarea>
+              </div>
+              <div>
+                <button @click.stop="deleteComment($event, i)"><i class="far fa-trash-alt"></i></button>
+                <button  @click.stop="commentSaver($event, i, comment.text)">Save</button>
+              </div>
+            </div>
+          </span>
+          </img>
+        </div>
+        <div class="comments">
+          <h3>Comments({{ comments.length }})</h3>
+          <p
+            v-if="comments.length && comment.text"
+            v-for="(comment, i) in comments"
+            :key="i+1"
+            @click.stop="showTextArea(i)"
+          >
+            {{ comment.text }}
+          </p>
+          <div class="no-comments" v-if="!comments.length || (comments.length && comments.text)">
+            <h4>No Comment Found</h4>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XKYYH1GM5R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push( arguments ); }
+    gtag( 'js', new Date() );
+
+    gtag( 'config', 'G-04HG6E22B9' );
+  </script>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
+  <script src="./assets/js/comment-bubble.js"></script>
+</html>
